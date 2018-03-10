@@ -146,19 +146,20 @@ your_house = np.array([14.0, 24.0, 14.25, 9.0])
 
 # my_house greater than 18.5 or smaller than 10
 print(np.logical_or(my_house > 18.5, my_house < 10))
-
 ```
 
+### Loop over Nuper array
+Si se trata de un Numpy array de 1D, el bucle de todos los elementos puede ser tan simple como:
+```python
+para x en my_array:
+     ...
+ ```
+ 
+Si se trata de un Numpy array 2D, es más complicado. Un Numpy array 2D está formada por múltiples
+Numpy array 1D. Para iterar explícitamente sobre todos los elementos separados de una matriz multidimensional,
+se usa esta sintaxis:
 
-
-
-
-
-
-
-
-
-
-
-
-
+```python
+para x en np.nditer(my_array):
+     ...
+```
