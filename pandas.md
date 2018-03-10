@@ -272,3 +272,99 @@ print(cars.iloc[:, [2] ])
 # or
 print(cars.loc[:, ['drives_right'] ])
 ```
+
+
+## Filtering Pandas DataFrame
+
+Vamos a ver como filtrar datos de un DataFrame con operadores booleanos.
+
+Recordemos la tabla original
+
+```python
+     cars_per_cap        country drives_right
+US            809  United States         True
+AUS           731      Australia        False
+JAP           588          Japan        False
+IN             18          India        False
+RU            200         Russia         True
+MOR            70        Morocco         True
+EG             45          Egypt         True
+```
+
+
+```python
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Extract drives_right column as Series: dr
+# NOTA: tiene que ser como Series sino no funciona.
+
+dr = cars['drives_right']
+print(dr)
+
+''' Obtenemos la columna de tipo Series, con los valores booleanos
+US      True
+AUS    False
+JAP    False
+IN     False
+RU      True
+MOR     True
+EG      True
+Name: drives_right, dtype: bool
+'''
+
+#  Ahora usamos dr, para subdividir cars.
+# Como dr es una columna de valores booleanos, esta operacion, nos va a devolver
+# un DataFrame donde cada fila donde 'drives_right' sea True solamente.
+sel = cars[dr]
+
+# Print sel
+print(sel)
+'''
+     cars_per_cap        country drives_right
+US            809  United States         True
+RU            200         Russia         True
+MOR            70        Morocco         True
+EG             45          Egypt         True
+'''
+
+# Ahora queremos determinar los paises donde hay mas de 500 autos per capita
+
+# Create car_maniac: observations that have a cars_per_cap over 500
+cpc = cars['cars_per_cap'] # Panda series de autos por capita
+many_cars = cpc > 500 # Creamos boolean Series con los que tienen mas de 500 per capita
+car_maniac = cars[many_cars] # Le pasamos el boolean Series a cars, y nos devuelve las filas
+                             # de los paises que cumplen la condicion
+
+# Print car_maniac
+print(car_maniac)
+'''
+     cars_per_cap        country drives_right
+US            809  United States         True
+AUS           731      Australia        False
+JAP           588          Japan        False
+'''
+```
+
+Recuerde acerca de np.logical_and (), np.logical_or () y np.logical_not (), También se pueden usar
+en Pandas Series para realizar operaciones de filtrado más avanzadas.
+
+```python
+import pandas as pd
+cars = pd.read_csv('cars.csv', index_col = 0)
+
+# Vamos a necesitar numpy (porque Pandas esta basado en numpy)
+import numpy as np
+
+cpc = cars['cars_per_cap']
+between = np.logical_and(cpc > 10, cpc < 80)
+medium = cars[between]
+
+''' Obtenemos
+     cars_per_cap  country drives_right
+IN             18    India        False
+MOR            70  Morocco         True
+EG             45    Egypt         True
+
+'''
+```
