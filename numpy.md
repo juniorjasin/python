@@ -131,3 +131,34 @@ weight = np.round(np.random.normal(60.32, 15, samples), 2)
 # ahora unimos el peso y la altura en un array 2D de dos columnas
 np_city = np.column_stack((height, weight))
 ```
+
+## Boolean Operators
+
+Antes, los operadores como < y >= funcionaban con Numpy arrays. 
+Desafortunadamente, esto no es cierto para los operadores booleanos and, or, y not.
+
+Para usar estos operadores con Numpy, necesitará np.logical_and(), np.logical_or() y np.logical_not()
+
+```python
+import numpy as np
+my_house = np.array([18.0, 20.0, 10.75, 9.50])
+your_house = np.array([14.0, 24.0, 14.25, 9.0])
+
+# my_house greater than 18.5 or smaller than 10
+print(np.logical_or(my_house > 18.5, my_house < 10))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
