@@ -64,14 +64,15 @@ europe['italy'] = data
 ```
 
 
+### Loop over dictionary
+In Python 3, you need the items() method to loop over a dictionary:
+The order of the iteration is NOT fixed, because dictionaries are inherently unordered.
 
+```python
+world = { "afghanistan":30.55, 
+          "albania":2.77,
+          "algeria":39.21 }
 
-
-
-
-
-
-
-
-
-
+for key, value in world.items() :
+    print(key + " -- " + str(value))
+```
