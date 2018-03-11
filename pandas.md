@@ -368,3 +368,46 @@ EG             45    Egypt         True
 
 '''
 ```
+
+### Loop over DataFrame
+    
+La iteración sobre un Pandas DataFrame normalmente se hace con el método `iterrows()`. Usado en un bucle for,
+cada observación se repite y en cada iteración están disponibles la row label y el contenido real de la fila:
+
+```python
+para lab, row en brics.iterrows ():
+     ...
+```
+
+Los datos de fila generados por `iterrows()` en cada ejecución son un Pandas Series. 
+Se puede seleccionar fácilmente variables de la serie Pandas usando corchetes:
+
+```python
+for lab, row in brics.iterrows() :
+    print(row['country'])
+```
+
+### Add column
+Agregar la columna que indique el largo del nombre de cada pais al DataFrame brics:
+
+```python
+for lab, row in brics.iterrows() :
+    brics.loc[lab, "name_length"] = len(row["country"])
+```
+
+Usar `iterrows()` para iterar sobre cada observación de un Pandas DataFrame es fácil de entender,
+pero no muy eficiente. En cada iteración, estás creando una nueva Pandas Series.
+
+Si queremos agregar una columna a un DataFrame llamando a una función en otra columna, el método `iterrows()`
+en combinación con un bucle for no es la forma preferida de hacerlo. En cambio, usamos `apply()`.
+
+Compare la versión de `terrows()` con la versión de `apply()` para obtener el mismo resultado en el DataFrame brics:
+
+Compare the `iterrows()` version with the `apply()` version to get the same result in the brics DataFrame:
+
+```python
+for lab, row in brics.iterrows() :
+    brics.loc[lab, "name_length"] = len(row["country"])
+
+brics["name_length"] = brics["country"].apply(len)
+```
